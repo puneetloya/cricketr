@@ -6,7 +6,7 @@
 # stored for use in other functions
 ##########################################################################################
 getPlayerData <- function(profile,dir="./data",file="player001.csv",type="batting",
-                          homeOrAway=c(1,2),result=c(1,2,4)) {
+                          homeOrAway=c(1,2),result=c(1,2,4),curl=getCurlHandle()) {
     
     # Initial url to ""
     url <-""
@@ -49,7 +49,8 @@ getPlayerData <- function(profile,dir="./data",file="player001.csv",type="battin
     
     
     # Read the data from ESPN Cricinfo
-    tables=readHTMLTable(url,stringsAsFactors = F)
+    content = getURLContent(url=url,curl=curl)
+    tables=readHTMLTable(htmlParse(url,asTree=T))
     
     # Choose appropriate columns
     t <- tables$"Innings by innings list"
