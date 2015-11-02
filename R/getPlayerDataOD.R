@@ -56,7 +56,7 @@ getPlayerDataOD <- function(profile,dir="./data",file="player001.csv",type="batt
     
     # Create composite URL
     url <- paste(suburl1,player,suburl2,HA,result,suburl3,t,suburl4,sep="")
-    
+    print(url)
     content = getURLContent(url=url,curl=curl)
     tables = readHTMLTable(htmlParse(content,asTree=T))
     
