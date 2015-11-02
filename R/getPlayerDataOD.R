@@ -6,7 +6,7 @@
 # frame can # stored as a CSV file for use in other functions
 ##########################################################################################
 getPlayerDataOD <- function(profile,dir="./data",file="player001.csv",type="batting",
-                          homeOrAway=c(1,2,3),result=c(1,2,3,5)) {
+                          homeOrAway=c(1,2,3),result=c(1,2,3,5),curl=getCurlHandle()) {
     
     # Initial url to ""
     url <-""
@@ -57,9 +57,11 @@ getPlayerDataOD <- function(profile,dir="./data",file="player001.csv",type="batt
     # Create composite URL
     url <- paste(suburl1,player,suburl2,HA,result,suburl3,t,suburl4,sep="")
     
+    content = getURLContent(url=url,curl=curl)
+    tables = readHTMLTable(htmlParse(content,asTree=T))
     
     # Read the data from ESPN Cricinfo
-    tables=readHTMLTable(url,stringsAsFactors = F)
+    # tables=readHTMLTable(url,stringsAsFactors = F)
     
     # Choose appropriate columns
     t <- tables$"Innings by innings list"
